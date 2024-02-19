@@ -1,0 +1,22 @@
+FROM python:3.8-slim-buster
+
+RUN mkdir /python-docker
+# Définit le répertoire de travail
+WORKDIR /python-docker
+
+# Copiez d'abord le fichier requirements.txt et installez les dépendances.
+# Cette étape est mise en cache tant que le fichier requirements.txt ne change pas.
+COPY requirements.txt requirements.txt
+RUN python3 -m pip install --ignore-installed blinker --upgrade pip && \
+    pip install -r requirements.txt
+
+# Ensuite, copiez le reste de vos fichiers d'application.
+# Ces étapes ne sont pas mises en cache si les fichiers changent.
+COPY prediction1.py prediction1.py
+COPY app1.py app1.py
+COPY class_names.json class_names.json
+COPY IA IA
+
+
+# Définit la commande par défaut pour exécuter l'application
+CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]

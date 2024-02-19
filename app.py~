@@ -1,0 +1,62 @@
+from flask import Flask, jsonify, request
+import os
+import json
+from werkzeug.utils import secure_filename
+import tensorflow as tf
+from prediction1 import modele
+
+app = Flask(__name__)
+
+UPLOAD_FOLDER = 'images'
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
+
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# MODEL_PATH = 'C:\\Users\\Dorian\\Desktop\\Flask_test_env\\myapp\\IA'
+# loaded_model = tf.keras.models.load_model(MODEL_PATH)
+# img_height = 200
+# img_width = 200
+
+# with open('C:\\Users\\Dorian\\Desktop\\Flask_test_env\\myapp\\class_names.json', 'r') as file:
+#     class_names = json.load(file)
+
+# def load_and_preprocess_image(image_path):
+#     img = tf.keras.preprocessing.image.load_img(image_path, target_size=(img_height, img_width))
+#     img_array = tf.keras.preprocessing.image.img_to_array(img)
+#     img_array = tf.expand_dims(img_array, 0)
+#     return img_array
+
+# def predict_image(image_path):
+#     processed_image = load_and_preprocess_image(image_path)
+#     prediction = loaded_model.predict(processed_image)
+#     predicted_class_index = prediction.argmax()
+#     predicted_class = class_names[predicted_class_index]
+#     return predicted_class
+# def make_prediction(image_path):
+#     try:
+#         predicted_class = predict_image(image_path)
+#         return predicted_class
+#     except Exception as e:
+#         print("Erreur lors de la prédiction:", e)
+#         return "Erreur de prédiction"
+
+@app.route('/upload_photo', methods=['POST'])
+def upload_photo():
+    if 'photo' not in request.files:
+        return jsonify({'error': 'Aucun fichier trouvé'}), 400
+    photo = request.files['photo']
+    if photo.filename == '':
+        return jsonify({'error': 'Nom de fichier vide'}), 400
+
+    if photo:
+        filename = secure_filename(photo.filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        photo.save(file_path)
+        prediction = modele(file_path)
+        return jsonify({'prediction': prediction}), 200
+
+    return jsonify({'error': 'Erreur lors du téléchargement'}), 500
+
+if __name__=='__main__':
+    app.run(host='0.0.0.0', port=5000, debug=True)
