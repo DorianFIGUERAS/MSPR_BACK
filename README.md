@@ -38,7 +38,7 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 
 
 ## Description détaillée des scripts
-- 'app.py' : Ce code Python est une application Flask qui fournit plusieurs endpoints pour différentes fonctionnalités, utilisant des bibliothèques externes. Import des bibliothèques et initialisation des variables :
+- **app.py** : Ce code Python est une application Flask qui fournit plusieurs endpoints pour différentes fonctionnalités, utilisant des bibliothèques externes. Import des bibliothèques et initialisation des variables :
 
   ## 1. Initialisation :
   Importation des bibliothèques et configuration du certificat Firebase pour initialiser la connexion à la base de données.
@@ -61,6 +61,11 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 
 /pyspark : Endpoint pour déclencher un processus PySpark via le script **pysparknico.py**.
 
-- **descriptif.py**
+- **descriptif.py** :
+    ## 1. Initialisation :
+    Importation des bibliothèques et définition des champs de la table "descriptif" dans la fonction **format_descriptif_data**. 
+
+    ## 2. Détails :
+      - **descriptif_table** : On définit un dictionnaire afin de récupérer l'animal ID correspondant à la prédiction effectuée (et récupérée en paramètre). On initialise la base de données, puis on requête la base de données grâce à l'ID de l'animal récupéré et aux champs de la table "descriptif" définit plus tôt. Toutes les informations sont retournées dans une variable dans le script **app.py**. 
 
 
