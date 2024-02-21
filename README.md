@@ -40,14 +40,14 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 ## Description détaillée des scripts
 - 'app.py' : Ce code Python est une application Flask qui fournit plusieurs endpoints pour différentes fonctionnalités, utilisant des bibliothèques externes. Import des bibliothèques et initialisation des variables :
 
-  1. Importation des bibliothèques et configuration du certificat Firebase pour initialiser la connexion à la base de données. Initialisation de Flask avec une clé secrète. Déclaration des variables qui serviront comme 'UID_user'. 
+  ## 1. Importation des bibliothèques et configuration du certificat Firebase pour initialiser la connexion à la base de données. Initialisation de Flask avec une clé secrète. Déclaration des variables qui serviront comme 'UID_user'. 
 Un dossier local est créé pour stocker les images téléchargées à partir de l'application.
 
-  2. Définition des endpoints :
+  ## 2. Définition des endpoints :
 
-  '/userid' : Reçoit et traite l'UID utilisateur envoyé sous forme de JSON par l'application.
-/upload_photo : Endpoint pour télécharger une photo, effectuer une prédiction à l'aide d'un modèle TensorFlow, uploader des informations dans une base de données, et renvoyer des informations sur la prédiction.
-/history : Endpoint pour récupérer l'historique des images téléchargées par un utilisateur spécifié.
+'/userid' : Reçoit et traite l'UID utilisateur envoyé sous forme de JSON par l'application.
+'/upload_photo' : Endpoint pour télécharger une photo envoyée par l'utilisateur, effectuer une prédiction à l'aide de l'appel de la méthode "modele" du script **prediction.py**. On vient ensuite uploader les informations dans la base de données et exécuter la fonction "descriptif_table" du script **table_user.py** afin de récupérer les informations relatives à l'animal. Toutes ces informations sont renvoyées à l'application au format JSON et donc à l'utilisateur :  prédiction, descriptif de l'animal ainsi que l'url de la photo associé à l'animal prédit.
+/history : Endpoint pour récupérer l'historique des images téléchargées par un utilisateur. Grâce à la route '/userid' nous avons déjà récupérer l'UID de l'utilisateur lorsque il a démarrer l'application. Nous venons donc ici requpeter la base de données afin de récupérer l'historique de l'utilisateur (prédiction + photo envoyée) grâce à une clause where. Les données sont envoyées à l'application sous format JSON et affichées à l'utilisateur.
 /bddnico : Endpoint pour rendre un modèle HTML (peut-être pour une page de téléversement d'images).
 /upload : Endpoint pour télécharger plusieurs photos, les enregistrer localement, puis les uploader vers Firebase Storage.
 /pysparkus : Endpoint pour rendre une autre page HTML (peut-être pour une interface utilisateur PySpark).
