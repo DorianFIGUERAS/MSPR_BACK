@@ -110,7 +110,7 @@ Le projet requière plusieurs packages python qui seront installés via **requir
     Importation des différentes bibliothèques et initialisation de la base de données.
 
     ## 2. Détails :
-    Nous créons ici un dictionnaire afin d'attribuer un ID à chaque animal pour créer une key. Nous vérifions ensuite si ce que l'on souhaite uploader est une image (ou un fichier) ou si c'est un dossier car le traitement serait différent en fonction du type. Nous insérons ensuite les images dans la BDD à l'endroit spécifier (ici : **Images/{animal_name}/{image_name}**). Les informations **animal_name** ainsi qu'**image_name** sont récupérées en paramètre de la fonction **uploadImagesToFirebaseStorage**. Une fois les images insérées, nous générons des urls publiques afin de pouvoir les réutiliser plus tard puis nous créons la table dans la database dans laquelle nous y mettons toutes les informations nécéssaires et potentiellement utilies.
+    Nous créons ici un dictionnaire afin d'attribuer un ID à chaque animal pour créer une key. Nous vérifions ensuite si ce que l'on souhaite uploader est une image (ou un fichier) ou si c'est un dossier car le traitement serait différent en fonction du type. Nous insérons ensuite les images dans la BDD à l'endroit spécifier (ici : **Images/{animal_name}/{image_name}**). Les informations **animal_name** ainsi qu'**image_name** sont récupérées en paramètre de la fonction **uploadImagesToFirebaseStorage**. Une fois les images insérées, nous générons des urls publiques afin de pouvoir les réutiliser plus tard puis nous créons la table dans la database dans laquelle nous y mettons toutes les informations nécéssaires et potentiellement utiles.
 
   
     
