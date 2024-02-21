@@ -90,4 +90,19 @@ Le projet requière plusieurs packages python qui seront installés via **requir
       ## 2. Détails :
       On vient ici requêter la base de données Firebase afin de récupérer l'url des images uploadées par l'utilisateur ainsi que les prédictions associées. Cela permettra d'envoyer toutes ces informations à l'application au format JSON afin de les afficher à l'utilisateur.
 
+- **TU.py** :
+    ## 1. Initialisation :
+    Importation des bibliothèques.
+
+    ## 2. Détails :
+    Ces tests sont voués à vérifier que l'ensemble des fonctions qui composent les différents scripts python sont fonctionnels et retournent bel et bien les réponses attendues.
+
+- **upload_BBD.py** :
+    ## 1. Initialisation :
+    Importation des bibliothèques et initialisation de la BDD si ce n'est pas déjà fait.
+
+    ## 2. Détails :
+    Pour uploader l'image de l'utilisateur, nous récupérons ici le path de l'image initialement stockée dans le conteneur docker ainsi que l'UID de l'utilisateur. Nous envoyons ensuite l'image dans la BDD en spécifant que l'on souhaite créer une url publique associée à cette image afin de pouvoir la réutiliser plus tard (pour l'historique utilisateur par exemple). Une fois l'image uploadée ainsi que les informations créées, nous venons insérer tout cela dans la database de Firebase en spécifiant les champs ainsi que leur contenu.
+
+  
     
