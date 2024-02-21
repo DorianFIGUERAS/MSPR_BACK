@@ -51,11 +51,11 @@ Un dossier local est créé pour stocker les images téléchargées à partir de
 
 /history : Endpoint pour récupérer l'historique des images téléchargées par un utilisateur. Grâce à la route '/userid' nous avons déjà récupérer l'UID de l'utilisateur lorsque il a démarrer l'application. Nous venons donc ici requpeter la base de données afin de récupérer l'historique de l'utilisateur (prédiction + photo envoyée) grâce à une clause where. Les données sont envoyées à l'application sous format JSON et affichées à l'utilisateur.
 
-/bddnico : Endpoint pour uploader les images sélectionnées dans la base de données afin d'alimenter plus tard pour l'ETL et l'entraînement de l'IA (page de téléversement d'images). Lors de l'envoie des images via le script **index.html**, cela va pointer vers l'endpoint '/upload' afin d'éxécuter l'insertion desimages dans la base de données. 
+/bddnico : Endpoint pour uploader les images sélectionnées dans la base de données afin d'alimenter plus tard pour l'ETL et l'entraînement de l'IA (page de téléversement d'images). Lors de l'envoie des images via le script **index.html**, cela va pointer vers l'endpoint '/upload' afin d'éxécuter l'insertion des images dans la base de données. 
 
 /upload : Endpoint pour uploader plusieurs photos dans la BDD. On les enregistre d'abord localement, puis on les uploade vers Firebase Storage avant de les supprimer du conteneur pour optimiser l'espace de stockage du serveur. 
 
-/pysparkus : Endpoint pour rendre une autre page HTML (peut-être pour une interface utilisateur PySpark).
+/pysparkus : Endpoint pour rendre une page HTML. Cette page permet ensuite de rediriger vers l'endpoint '/pyspark' afin de lancer le processus ETL.
 
 /pyspark : Endpoint pour déclencher un processus PySpark non défini dans ce code (probablement une tâche d'entraînement d'un modèle d'IA à partir des images téléchargées).
 
