@@ -75,5 +75,9 @@ Le projet requière plusieurs packages python qui seront installés via **requir
       * Pour **index.html** : Création d'un formulaire et d'un liste déroulante pour permettre la sélection de l'animal afin d'uploader les images dans le bon dossier de la BDD. On  donne la possibilité à l'utilisateur de sélectionner un ou plusieurs fichiers via la balise **<input>** et d'envoyer toutes ces informations au script **app.py**.
       * Pour **index.html** : Permet de lancer le script pour la phase d'ETL ainsi que la possibilité de lancer l'entraînement de l'IA via les bouttons présents dans la page. 
 
+- **prediction.py** :
+    ## 1. Initialisation :
+    Importation des bibliothèques.
 
-
+    ## 2. Détails :
+    On vient charger le modèle d'IA déjà enregistré dans le conteneur Docker. La fonction **modele** attend en paramètre le path de l'image à classer. Pour cela, le script charge un fichier **class_names.json** également contenu dans le conteneur Docker qui contient les réponses possibles de classification. Ainsi, après analyse de l'image l'IA va retourner une prédiction ainsi que le pourcentage de chance que cette prédiction soit juste. 
