@@ -28,7 +28,7 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 
 - `upload_BDD.py`: Ce script permet d'enregistrer les images envoyées par l'utilisateur ainsi que la prédiction qui a été faite et l'UID de l'utilisateur qui permettra par la suite de requpeter la base de données Firebase pour récupérer un historique utilisateur. 
 
-- `upload_nico.py`: Alternative script for database uploading.
+- `upload_nico.py`: En lien direct avec **index.html**, ce script permet d'uploader les images sélectionnées, de les insérer et de générer des urls dans la base de données Firebase demanière quasi-automatisée.
 
 ## Setup Instructions
 1. Ensure Docker is installed and running on your system.
