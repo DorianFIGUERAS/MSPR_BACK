@@ -68,6 +68,10 @@ Le projet requière plusieurs packages python qui seront installés via **requir
     ## 2. Détails :
     **descriptif_table** : On définit un dictionnaire afin de récupérer l'animal ID correspondant à la prédiction effectuée (et récupérée en paramètre). On
     initialise la base de données, puis on requête la base de données grâce à l'ID de l'animal récupéré et aux champs de la table "descriptif" définit plus tôt.
-    Toutes les informations sont retournées dans une variable dans le script **app.py**. 
+    Toutes les informations sont retournées dans une variable dans le script **app.py**.
+
+  - **index.html**, **index1.html** :
+      ## 1. Détails :
+      Création d'un formulaire et d'un liste déroulante pour permettre la sélection de l'animal afin d'uploader les images dans le bon dossier de la BDD. On  donne la possibilité à l'utilisateur de sélectionner un ou plusieurs fichiers via la balise **<input>** et d'envoyer toutes ces informations au script **app.py**. 
 
 
