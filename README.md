@@ -30,12 +30,35 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 
 - `upload_nico.py`: En lien direct avec **index.html**, ce script permet d'uploader les images sélectionnées, de les insérer et de générer des urls dans la base de données Firebase demanière quasi-automatisée.
 
-## Setup Instructions
-1. Ensure Docker is installed and running on your system.
-2. Build the Docker container using the Dockerfile provided.
-3. Install the required packages using `requirements.txt`.
-4. Run `app.py` to start the Flask server.
+## Instructions
+1. S'assurer que Docker est bien installé sur votre ordinateur (*[installer docker](https://www.docker.com/products/docker-desktop/)).
+2. Via un invité de commande ou l'IDE de votre choix, lancer la commande ```docker build -t <nom_de_l'image_souhaitée> .```
+3. Toujours via votre invité de commade ou via l'IDE de votre choix, exécuter la commande ```docker run --restart always -d -p 5000:5000 <nom_de_l'image_souhaitée>```
+4. Accéder à l'url suivant pour vérifier que tout s'est bien exécuté : *[http://localhost:5000/bddnico](http://localhost:5000/bddnico). Si vous arrivez sur une feêtre comme ceci c'est que cela a bien fonctionné : ![image](https://github.com/DorianFIGUERAS/MSPR_BACK/assets/127091847/ff00557a-6ab2-4883-85ef-49f2912c9fde)
 
-## Usage
-The application can be accessed via the front-end HTML pages which interact with the Flask backend for processing and predictions.
+
+## Description détaillée des scripts
+- 'app.py' : Ce code Python est une application Flask qui fournit plusieurs endpoints pour différentes fonctionnalités, utilisant des bibliothèques externes. Import des bibliothèques et initialisation des variables :
+
+  1. Importation des bibliothèques et configuration du certificat Firebase pour initialiser la connexion à la base de données. Initialisation de Flask avec une clé secrète. Déclaration des variables qui serviront comme 'UID_user'. 
+Un dossier local est créé pour stocker les images téléchargées à partir de l'application.
+
+  2. Définition des endpoints :
+
+  '/userid' : Reçoit et traite l'UID utilisateur envoyé sous forme de JSON par l'application.
+/upload_photo : Endpoint pour télécharger une photo, effectuer une prédiction à l'aide d'un modèle TensorFlow, uploader des informations dans une base de données, et renvoyer des informations sur la prédiction.
+/history : Endpoint pour récupérer l'historique des images téléchargées par un utilisateur spécifié.
+/bddnico : Endpoint pour rendre un modèle HTML (peut-être pour une page de téléversement d'images).
+/upload : Endpoint pour télécharger plusieurs photos, les enregistrer localement, puis les uploader vers Firebase Storage.
+/pysparkus : Endpoint pour rendre une autre page HTML (peut-être pour une interface utilisateur PySpark).
+/pyspark : Endpoint pour déclencher un processus PySpark non défini dans ce code (probablement une tâche d'entraînement d'un modèle d'IA à partir des images téléchargées).
+Fonctions associées à chaque endpoint :
+
+Ces fonctions reçoivent généralement les données de requête, effectuent des opérations nécessaires, puis retournent une réponse appropriée (généralement au format JSON).
+Des opérations telles que la manipulation de fichiers, les requêtes à une base de données Firestore, et les téléchargements vers Firebase Storage sont effectuées.
+Exécution de l'application Flask :
+
+L'application est exécutée sur 0.0.0.0 (pour écouter sur toutes les interfaces réseau) et le port 5000.
+Le mode de débogage est activé pour faciliter le développement et le débogage.
+
 
