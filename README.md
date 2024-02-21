@@ -80,4 +80,14 @@ Le projet requière plusieurs packages python qui seront installés via **requir
     Importation des bibliothèques.
 
     ## 2. Détails :
-    On vient charger le modèle d'IA déjà enregistré dans le conteneur Docker. La fonction **modele** attend en paramètre le path de l'image à classer. Pour cela, le script charge un fichier **class_names.json** également contenu dans le conteneur Docker qui contient les réponses possibles de classification. Ainsi, après analyse de l'image l'IA va retourner une prédiction ainsi que le pourcentage de chance que cette prédiction soit juste. 
+    On vient charger le modèle d'IA déjà enregistré dans le conteneur Docker. La fonction **modele** attend en paramètre le path de l'image à classer. Pour cela, le script charge un fichier **class_names.json** également contenu dans le conteneur Docker qui contient les réponses possibles de classification. Ainsi, après analyse de l'image l'IA va retourner une prédiction ainsi que le pourcentage de chance que cette prédiction soit juste.
+
+  - **table_user.py** :
+      ## 1. Initialisation :
+      Importation des bibliothèques
+      Initialisation de la BDD si ce n'est pas déjà fait.
+    
+      ## 2. Détails :
+      On vient ici requêter la base de données Firebase afin de récupérer l'url des images uploadées par l'utilisateur ainsi que les prédictions associées. Cela permettra d'envoyer toutes ces informations à l'application au format JSON afin de les afficher à l'utilisateur.
+
+    
