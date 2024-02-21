@@ -66,6 +66,8 @@ Le projet requière plusieurs packages python qui seront installés via **requir
     Importation des bibliothèques et définition des champs de la table "descriptif" dans la fonction **format_descriptif_data**. 
 
     ## 2. Détails :
-      - **descriptif_table** : On définit un dictionnaire afin de récupérer l'animal ID correspondant à la prédiction effectuée (et récupérée en paramètre). On initialise la base de données, puis on requête la base de données grâce à l'ID de l'animal récupéré et aux champs de la table "descriptif" définit plus tôt. Toutes les informations sont retournées dans une variable dans le script **app.py**. 
+    **descriptif_table** : On définit un dictionnaire afin de récupérer l'animal ID correspondant à la prédiction effectuée (et récupérée en paramètre). On
+    initialise la base de données, puis on requête la base de données grâce à l'ID de l'animal récupéré et aux champs de la table "descriptif" définit plus tôt.
+    Toutes les informations sont retournées dans une variable dans le script **app.py**. 
 
 
