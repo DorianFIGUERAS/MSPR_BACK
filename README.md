@@ -104,5 +104,12 @@ Le projet requière plusieurs packages python qui seront installés via **requir
     ## 2. Détails :
     Pour uploader l'image de l'utilisateur, nous récupérons ici le path de l'image initialement stockée dans le conteneur docker ainsi que l'UID de l'utilisateur. Nous envoyons ensuite l'image dans la BDD en spécifant que l'on souhaite créer une url publique associée à cette image afin de pouvoir la réutiliser plus tard (pour l'historique utilisateur par exemple). Une fois l'image uploadée ainsi que les informations créées, nous venons insérer tout cela dans la database de Firebase en spécifiant les champs ainsi que leur contenu.
 
+  - **upload_nico.py** :
+      ## 1. Initialisation :
+      Importation des différentes bibliothèques et initialisation de la base de données.
+
+      ## 2. Détails :
+      Nous créons ici un dictionnaire afin d'attribuer un ID à chaque animal pour créer une key. Nous vérifions ensuite si ce que l'on souhaite uploader est une image (ou un fichier) ou si c'est un dossier car le traitement serait différent en fonction du type. Nous insérons ensuite les images dans la BDD à l'endroit spécifier (ici : **Images/{animal_name}/{image_name}**). Les informations **animal_name** ainsi qu'**image_name** sont récupérées en paramètre de la fonction **uploadImagesToFirebaseStorage**. Une fois les images insérées, nous générons des urls publiques afin de pouvoir les réutiliser plus tard puis nous créons la table dans la database dans laquelle nous y mettons toutes les informations nécéssaires et potentiellement utilies.
+
   
     
