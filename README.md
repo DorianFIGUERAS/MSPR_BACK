@@ -6,7 +6,7 @@
 Cette documentation a pour but d'être simple et d'expliquer l'installation de la partie Back-End de l'application Wildlens sur sa machine. Elle comprend l'installation d'un conteneur Docker et différents scripts python. 
 
 ## Requirements
-Le projet requière plusieurs packages python qui seront installés via **requirements.txt dans le conteneur Docker :
+Le projet requière plusieurs packages python qui seront installés via **requirements.txt** dans le conteneur Docker :
 - Flask
 - Werkzeug
 - Numpy
@@ -14,9 +14,9 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 - Tensorflow
 - Firebase-admin
 
-## File Structure
-- `app.py`: Main Flask application file.
-- `descriptif.py`: Describes the application's functionalities.
+## Composition du repository
+- `app.py`: Serveur Flask permettant l'accès au serveur et la mise en concordance des différents scripts python.
+- `descriptif.py`: Permet de requêter la base de données Firebase en fonction de la prédiction faite par le script **prediction.py**. Ce script renvoie les informations relative à un animal ainsi qu'une URL qui correspond à l'image de l'animal prédit. 
 - `index.html`, `index1.html`: Front-end HTML files.
 - `prediction.py`: Handles the prediction logic.
 - `requirements.txt`: Lists all the dependencies.
