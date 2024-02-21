@@ -46,12 +46,19 @@ Un dossier local est créé pour stocker les images téléchargées à partir de
   ## 2. Définition des endpoints :
 
 '/userid' : Reçoit et traite l'UID utilisateur envoyé sous forme de JSON par l'application.
-'/upload_photo' : Endpoint pour télécharger une photo envoyée par l'utilisateur, effectuer une prédiction à l'aide de l'appel de la méthode "modele" du script **prediction.py**. On vient ensuite uploader les informations dans la base de données et exécuter la fonction "descriptif_table" du script **table_user.py** afin de récupérer les informations relatives à l'animal. Toutes ces informations sont renvoyées à l'application au format JSON et donc à l'utilisateur :  prédiction, descriptif de l'animal ainsi que l'url de la photo associé à l'animal prédit.
+
+'/upload_photo' : Endpoint pour télécharger une photo envoyée par l'utilisateur, effectuer une prédiction à l'aide de l'appel de la méthode "modele" du script **prediction.py**. On vient ensuite sauvegarder localement l'image, uploader les informations dans la base de données et exécuter la fonction "descriptif_table" du script **table_user.py** afin de récupérer les informations relatives à l'animal. On supprimer ensuite l'image enregistrée localement afin d'optimiser l'espace de stockage du serveur. Toutes ces informations sont renvoyées à l'application au format JSON et donc à l'utilisateur :  prédiction, descriptif de l'animal ainsi que l'url de la photo associé à l'animal prédit.
+
 /history : Endpoint pour récupérer l'historique des images téléchargées par un utilisateur. Grâce à la route '/userid' nous avons déjà récupérer l'UID de l'utilisateur lorsque il a démarrer l'application. Nous venons donc ici requpeter la base de données afin de récupérer l'historique de l'utilisateur (prédiction + photo envoyée) grâce à une clause where. Les données sont envoyées à l'application sous format JSON et affichées à l'utilisateur.
+
 /bddnico : Endpoint pour uploader les images sélectionnées dans la base de données afin d'alimenter plus tard pour l'ETL et l'entraînement de l'IA (page de téléversement d'images). Lors de l'envoie des images via le script **index.html**, cela va pointer vers l'endpoint '/upload' afin d'éxécuter l'insertion desimages dans la base de données. 
-/upload : Endpoint pour télécharger plusieurs photos, les enregistrer localement, puis les uploader vers Firebase Storage.
+
+/upload : Endpoint pour uploader plusieurs photos dans la BDD. On les enregistre d'abord localement, puis on les uploade vers Firebase Storage avant de les supprimer du conteneur pour optimiser l'espace de stockage du serveur. 
+
 /pysparkus : Endpoint pour rendre une autre page HTML (peut-être pour une interface utilisateur PySpark).
+
 /pyspark : Endpoint pour déclencher un processus PySpark non défini dans ce code (probablement une tâche d'entraînement d'un modèle d'IA à partir des images téléchargées).
+
 Fonctions associées à chaque endpoint :
 
 Ces fonctions reçoivent généralement les données de requête, effectuent des opérations nécessaires, puis retournent une réponse appropriée (généralement au format JSON).
