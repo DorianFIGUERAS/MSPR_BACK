@@ -47,19 +47,20 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 
   ## 2. Définition des endpoints :
 
-`/userid` : Reçoit et traite l'UID utilisateur envoyé sous forme de JSON par l'application.
+  `/userid` : Reçoit et traite l'UID utilisateur envoyé sous forme de JSON par l'application.
 
-`/upload_photo` : Endpoint pour télécharger une photo envoyée par l'utilisateur, effectuer une prédiction à l'aide de l'appel de la méthode "modele" du script **prediction.py**. On vient ensuite sauvegarder localement l'image, uploader les informations dans la base de données et exécuter la fonction "descriptif_table" du script **table_user.py** afin de récupérer les informations relatives à l'animal. On supprimer ensuite l'image enregistrée localement afin d'optimiser l'espace de stockage du serveur. Toutes ces informations sont renvoyées à l'application au format JSON et donc à l'utilisateur :  prédiction, descriptif de l'animal ainsi que l'url de la photo associé à l'animal prédit.
+  `/upload_photo` : Endpoint pour télécharger une photo envoyée par l'utilisateur, effectuer une prédiction à l'aide de l'appel de la méthode
+"modele" du script **prediction.py**. On vient ensuite sauvegarder localement l'image, uploader les informations dans la base de données et exécuter la fonction "descriptif_table" du script **table_user.py** afin de récupérer les informations relatives à l'animal. On supprimer ensuite l'image enregistrée localement afin d'optimiser l'espace de stockage du serveur. Toutes ces informations sont renvoyées à l'application au format JSON et donc à l'utilisateur :  prédiction, descriptif de l'animal ainsi que l'url de la photo associé à l'animal prédit.
 
-`/history` : Endpoint pour récupérer l'historique des images téléchargées par un utilisateur. Grâce à la route '/userid' nous avons déjà récupérer l'UID de l'utilisateur lorsque il a démarrer l'application. Nous venons donc ici requpeter la base de données afin de récupérer l'historique de l'utilisateur (prédiction + photo envoyée) grâce à une clause where. Les données sont envoyées à l'application sous format JSON et affichées à l'utilisateur.
+  `/history` : Endpoint pour récupérer l'historique des images téléchargées par un utilisateur. Grâce à la route '/userid' nous avons déjà récupérer l'UID de l'utilisateur lorsque il a démarrer l'application. Nous venons donc ici requpeter la base de données afin de récupérer l'historique de l'utilisateur (prédiction + photo envoyée) grâce à une clause where. Les données sont envoyées à l'application sous format JSON et affichées à l'utilisateur.
 
-`/bddnico` : Endpoint pour uploader les images sélectionnées dans la base de données afin d'alimenter plus tard pour l'ETL et l'entraînement de l'IA (page de téléversement d'images). Lors de l'envoie des images via le script **index.html**, cela va pointer vers l'endpoint '/upload' afin d'éxécuter l'insertion des images dans la base de données. 
+  `/bddnico` : Endpoint pour uploader les images sélectionnées dans la base de données afin d'alimenter plus tard pour l'ETL et l'entraînement de l'IA (page de téléversement d'images). Lors de l'envoie des images via le script **index.html**, cela va pointer vers l'endpoint '/upload' afin d'éxécuter l'insertion des images dans la base de données. 
 
-`/upload` : Endpoint pour uploader plusieurs photos dans la BDD. On les enregistre d'abord localement, puis on les uploade vers Firebase Storage avant de les supprimer du conteneur pour optimiser l'espace de stockage du serveur. 
+  `/upload` : Endpoint pour uploader plusieurs photos dans la BDD. On les enregistre d'abord localement, puis on les uploade vers Firebase Storage avant de les supprimer du conteneur pour optimiser l'espace de stockage du serveur. 
 
-`/pysparkus` : Endpoint pour rendre une page HTML. Cette page permet ensuite de rediriger vers l'endpoint '/pyspark' afin de lancer le processus ETL.
+  `/pysparkus` : Endpoint pour rendre une page HTML. Cette page permet ensuite de rediriger vers l'endpoint '/pyspark' afin de lancer le processus ETL.
 
-`/pyspark` : Endpoint pour déclencher un processus PySpark via le script **pysparknico.py**.
+  `/pyspark` : Endpoint pour déclencher un processus PySpark via le script **pysparknico.py**.
 
 - **descriptif.py** :
     ## 1. Initialisation :
