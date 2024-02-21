@@ -40,8 +40,10 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 ## Description détaillée des scripts
 - 'app.py' : Ce code Python est une application Flask qui fournit plusieurs endpoints pour différentes fonctionnalités, utilisant des bibliothèques externes. Import des bibliothèques et initialisation des variables :
 
-  ## 1. Importation des bibliothèques et configuration du certificat Firebase pour initialiser la connexion à la base de données. Initialisation de Flask avec une clé secrète. Déclaration des variables qui serviront comme 'UID_user'. 
-Un dossier local est créé pour stocker les images téléchargées à partir de l'application.
+  ## 1. Initialisation :
+  Importation des bibliothèques et configuration du certificat Firebase pour initialiser la connexion à la base de données.
+  Initialisation de Flask avec une clé secrète. Déclaration des variables qui serviront comme 'UID_user'.
+  Un dossier local est créé pour stocker les images téléchargées à partir de l'application.
 
   ## 2. Définition des endpoints :
 
@@ -57,15 +59,8 @@ Un dossier local est créé pour stocker les images téléchargées à partir de
 
 /pysparkus : Endpoint pour rendre une page HTML. Cette page permet ensuite de rediriger vers l'endpoint '/pyspark' afin de lancer le processus ETL.
 
-/pyspark : Endpoint pour déclencher un processus PySpark non défini dans ce code (probablement une tâche d'entraînement d'un modèle d'IA à partir des images téléchargées).
+/pyspark : Endpoint pour déclencher un processus PySpark via le script **pysparknico.py**.
 
-Fonctions associées à chaque endpoint :
-
-Ces fonctions reçoivent généralement les données de requête, effectuent des opérations nécessaires, puis retournent une réponse appropriée (généralement au format JSON).
-Des opérations telles que la manipulation de fichiers, les requêtes à une base de données Firestore, et les téléchargements vers Firebase Storage sont effectuées.
-Exécution de l'application Flask :
-
-L'application est exécutée sur 0.0.0.0 (pour écouter sur toutes les interfaces réseau) et le port 5000.
-Le mode de débogage est activé pour faciliter le développement et le débogage.
+- **descriptif.py**
 
 
