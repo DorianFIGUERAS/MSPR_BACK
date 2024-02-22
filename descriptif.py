@@ -44,7 +44,7 @@ def descriptif_table(prediction):
         # Construire la chaîne de valeurs
         valeurs = "\n".join(f"{key}: {value}\n" for key, value in formatted_data.items())
         # Récupérer l'URL de l'image
-        image_url = image_doc.to_dict().get("url_imageur1", "URL de l'image non trouvée")
+        image_url = image_doc.to_dict().get("animal_imageurl")
         return valeurs,image_url
     else:
         return (f"Aucun document trouvé pour animal_id: {prediction}")

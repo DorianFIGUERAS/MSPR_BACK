@@ -23,8 +23,11 @@ def modele(image_path):
     img_array = tf.expand_dims(img_array, 0)
 
     prediction = loaded_model.predict(img_array)
+    predicted_class_index = np.argmax(prediction)
+    predicted_probability = round(np.max(prediction)*100)
+
     predicted_class = class_names[np.argmax(prediction)]
 
 
-    return predicted_class
+    return predicted_class, predicted_probability
 
