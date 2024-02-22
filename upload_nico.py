@@ -70,7 +70,7 @@ def uploadImagesToFirebaseStorage(images_path, animal_name):
             "nom": image_name.split('.')[0],  # Nom de l'image sans extension
             "url": download_url  # URL publique de l'image
         }
-        db.collection('Images').add(doc_data)  # Ajouter le document à Firestore
+        db.collection('images').add(doc_data)  # Ajouter le document à Firestore
 
         print(f"Image {image_name} téléchargée et enregistrée dans Firestore sous {animal_name}.")
 
