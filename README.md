@@ -40,12 +40,9 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 ## Description détaillée des scripts
 - **app.py** : Ce code Python est une application Flask qui fournit plusieurs endpoints pour différentes fonctionnalités, utilisant des bibliothèques externes. Import des bibliothèques et initialisation des variables :
 
-  ## 1. Initialisation :
   Importation des bibliothèques et configuration du certificat Firebase pour initialiser la connexion à la base de données.
   Initialisation de Flask avec une clé secrète. Déclaration des variables qui serviront comme 'UID_user'.
   Un dossier local est créé pour stocker les images téléchargées à partir de l'application.
-
-  ## 2. Définition des endpoints :
 
   `/userid` : Reçoit et traite l'UID utilisateur envoyé sous forme de JSON par l'application.
 
@@ -63,10 +60,9 @@ Le projet requière plusieurs packages python qui seront installés via **requir
   `/pyspark` : Endpoint pour déclencher un processus PySpark via le script **pysparknico.py**.
 
 - **descriptif.py** :
-    ## 1. Initialisation :
+
     Importation des bibliothèques et définition des champs de la table "descriptif" dans la fonction **format_descriptif_data**. 
 
-    ## 2. Détails :
     **descriptif_table** : On définit un dictionnaire afin de récupérer l'animal ID correspondant à la prédiction effectuée (et récupérée en paramètre). On
     initialise la base de données, puis on requête la base de données grâce à l'ID de l'animal récupéré et aux champs de la table "descriptif" définit plus tôt.
     Toutes les informations sont retournées dans une variable dans le script **app.py**.
@@ -77,39 +73,34 @@ Le projet requière plusieurs packages python qui seront installés via **requir
     * Pour **index.html** : Permet de lancer le script pour la phase d'ETL ainsi que la possibilité de lancer l'entraînement de l'IA via les bouttons présents dans la page. 
 
 - **prediction.py** :
-    ## 1. Initialisation :
+ 
     Importation des bibliothèques.
 
-    ## 2. Détails :
     On vient charger le modèle d'IA déjà enregistré dans le conteneur Docker. La fonction **modele** attend en paramètre le path de l'image à classer. Pour cela, le script charge un fichier **class_names.json** également contenu dans le conteneur Docker qui contient les réponses possibles de classification. Ainsi, après analyse de l'image l'IA va retourner une prédiction ainsi que le pourcentage de chance que cette prédiction soit juste.
 
 - **table_user.py** :
-    ## 1. Initialisation :
+
     Importation des bibliothèques
     Initialisation de la BDD si ce n'est pas déjà fait.
     
-    ## 2. Détails :
     On vient ici requêter la base de données Firebase afin de récupérer l'url des images uploadées par l'utilisateur ainsi que les prédictions associées. Cela permettra d'envoyer toutes ces informations à l'application au format JSON afin de les afficher à l'utilisateur.
 
 - **TU.py** :
-    ## 1. Initialisation :
+
     Importation des bibliothèques.
 
-    ## 2. Détails :
     Ces tests sont voués à vérifier que l'ensemble des fonctions qui composent les différents scripts python sont fonctionnels et retournent bel et bien les réponses attendues.
 
 - **upload_BBD.py** :
-    ## 1. Initialisation :
+
     Importation des bibliothèques et initialisation de la BDD si ce n'est pas déjà fait.
 
-    ## 2. Détails :
     Pour uploader l'image de l'utilisateur, nous récupérons ici le path de l'image initialement stockée dans le conteneur docker ainsi que l'UID de l'utilisateur. Nous envoyons ensuite l'image dans la BDD en spécifant que l'on souhaite créer une url publique associée à cette image afin de pouvoir la réutiliser plus tard (pour l'historique utilisateur par exemple). Une fois l'image uploadée ainsi que les informations créées, nous venons insérer tout cela dans la database de Firebase en spécifiant les champs ainsi que leur contenu.
 
 - **upload_nico.py** :
-    ## 1. Initialisation :
+  
     Importation des différentes bibliothèques et initialisation de la base de données.
 
-    ## 2. Détails :
     Nous créons ici un dictionnaire afin d'attribuer un ID à chaque animal pour créer une key. Nous vérifions ensuite si ce que l'on souhaite uploader est une image (ou un fichier) ou si c'est un dossier car le traitement serait différent en fonction du type. Nous insérons ensuite les images dans la BDD à l'endroit spécifier (ici : **Images/{animal_name}/{image_name}**). Les informations **animal_name** ainsi qu'**image_name** sont récupérées en paramètre de la fonction **uploadImagesToFirebaseStorage**. Une fois les images insérées, nous générons des urls publiques afin de pouvoir les réutiliser plus tard puis nous créons la table dans la database dans laquelle nous y mettons toutes les informations nécéssaires et potentiellement utiles.
 
   
