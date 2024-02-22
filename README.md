@@ -3,7 +3,7 @@
 
 
 ## Overview
-Cette documentation a pour but d'être simple et d'expliquer l'installation de la partie Back-End de l'application Wildlens sur sa machine. Elle comprend l'installation d'un conteneur Docker et différents scripts python. 
+Cette documentation a pour but d'être simple et d'expliquer l'articulation de la partie Back-End de l'application Wildlens sur sa machine. Elle comprend l'installation d'un conteneur Docker et différents scripts python. 
 
 ## Requirements
 Le projet requière plusieurs packages python qui seront installés via **requirements.txt** dans le conteneur Docker :
