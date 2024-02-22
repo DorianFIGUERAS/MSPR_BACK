@@ -68,7 +68,7 @@ Le projet requière plusieurs packages python qui seront installés via **requir
     Toutes les informations sont retournées dans une variable dans le script **app.py**.
 
 - **index.html**, **index1.html** :
-    ## 1. Détails :
+
     * Pour **index.html** : Création d'un formulaire et d'un liste déroulante pour permettre la sélection de l'animal afin d'uploader les images dans le bon dossier de la BDD. On  donne la possibilité à l'utilisateur de sélectionner un ou plusieurs fichiers via la balise **<input>** et d'envoyer toutes ces informations au script **app.py**.
     * Pour **index.html** : Permet de lancer le script pour la phase d'ETL ainsi que la possibilité de lancer l'entraînement de l'IA via les bouttons présents dans la page. 
 
