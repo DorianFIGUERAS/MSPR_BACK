@@ -18,9 +18,6 @@ COPY upload_BDD.py upload_BDD.py
 COPY footprints.json footprints.json
 COPY descriptif.py descriptif.py
 COPY table_user.py table_user.py
-COPY index.html templates/index.html
-COPY upload_nico.py upload_nico.py
-COPY index1.html templates/index1.html
 
 
 

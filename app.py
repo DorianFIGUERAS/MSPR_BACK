@@ -9,7 +9,6 @@ from descriptif import descriptif_table
 from firebase_admin import credentials, storage, firestore
 from table_user import table_user_id
 import firebase_admin
-from upload_nico import uploadImagesToFirebaseStorage
 import shutil
 
 cred = credentials.Certificate('footprints.json')
@@ -103,46 +102,7 @@ def get_table_user():
     json_resultat = json.dumps(donnees_filtrees)
     return json_resultat
 
-@app.route('/bddnico')
-def index():
-    return render_template('/index.html')
 
-@app.route('/upload', methods=['POST'])
-def upload():
-    if 'photos' not in request.files:
-        flash('Aucun fichier sélectionné')
-        return redirect(request.url)
-    
-    photos = request.files.getlist('photos')
-    animal = request.form['animal']  # Récupère le nom de l'animal sélectionné
-    save_folder = 'dossier_images_download'
-
-    if not os.path.exists(save_folder):
-        os.makedirs(save_folder)
-
-    for photo in photos:
-        if photo.filename == '':
-            flash('Aucun fichier sélectionné')
-            return redirect(request.url)
-        if photo:
-            filename = photo.filename
-            destination = os.path.join(save_folder, filename)
-            photo.save(destination)
-            uploadImagesToFirebaseStorage(destination, animal)  # Passez l'animal en paramètre ici
-    shutil.rmtree(save_folder)
-    flash('Photos téléchargées avec succès')
-    return redirect(url_for('index'))
-
-@app.route('/pysparkus')
-def index_pyspark():
-    return render_template('/index1.html')
-
-@app.route('/pyspark', methods=['POST'])
-def pyspark_orchestrateur():
-
-    #Mettre les scritps et fonctions de Nico pour déclencher PySpark et déclencher l'entraînement de l'IA à partir des i
-#mages du dossier "dossier_images_download", enregistrer l'IA dans le dossier "IA" Supprimer le dossier contenant toutes
-#les images sur le conteneur
     return
 
 if __name__=='__main__':
