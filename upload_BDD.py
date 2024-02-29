@@ -5,6 +5,22 @@ from firebase_admin import firestore
 
 def upload_on_bdd(image_path, useruid, prediction):
 
+    animal_ids = {
+        "Castor": 1,
+        "Chat": 2,
+        "Chien": 3,
+        "Coyote": 4,
+        "Ecureuil": 5,
+        "Lapin": 6,
+        "Loup": 7,
+        "Lynx": 8,
+        "Ours": 9,
+        "Puma": 10,
+        "Rat": 11,
+        "Raton laveur": 12,
+        "Renard": 13
+    }
+
     # Télécharger le fichier JSON de configuration Firebase depuis la console Firebase et le placer dans le répertoire d
 #u script Python, on vérifie au préalable que Firebase admin n'est pas initiallisé:
     if not firebase_admin._apps:
@@ -41,7 +57,8 @@ def upload_on_bdd(image_path, useruid, prediction):
     doc_ref.set({
         'url_image': lien_telechargement,
         'user_id': useruid,
-        'prediction': prediction
+        'prediction': prediction,
+        "animal_id": animal_ids.get(prediction, 0)
         })
 
 
