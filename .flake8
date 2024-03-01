@@ -1,0 +1,5 @@
+[flake8]
+; Activer le contrôle du nombre maximum d'expressions dans une ligne :
+ignore = E203, E266, E501, W503, W291, E305, E211, E265, W191
+max-complexity = 10
+max-line-length = 88

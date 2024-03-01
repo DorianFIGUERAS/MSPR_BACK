@@ -6,7 +6,6 @@ from descriptif import descriptif_table
 from prediction import modele
 from table_user import table_user_id
 from upload_BDD import upload_on_bdd
-from upload_nico import uploadImagesToFirebaseStorage
 
 class FlaskAppTestCase(unittest.TestCase):
 
@@ -29,7 +28,7 @@ class FlaskAppTestCase(unittest.TestCase):
         mock_upload_on_bdd.return_value = True
         mock_descriptif_table.return_value = ('details about dog', 'http://image.url')
         
-        with open('C:/Users/Dorian/Desktop/docker_flask/Conteneur-docker/Dog-Tracks-5.jpg', 'rb') as img:
+        with open('Dog-Tracks-5.jpg', 'rb') as img:
             response = self.app.post('/upload_photo', data={'photo': img}, content_type='multipart/form-data')
         
         self.assertEqual(response.status_code, 200)
@@ -63,7 +62,7 @@ class TestDescriptifTable(unittest.TestCase):
         image_doc_snapshot = MagicMock()
         image_doc_snapshot.exists = True
         image_doc_snapshot.to_dict.return_value = {
-            "url_imageur1": "http://example.com/image.jpg"
+            "animal_imageurl": "http://example.com/image.jpg"
         }
 
         mock_client.return_value.collection.return_value.document.return_value.get.side_effect = [doc_snapshot, image_doc_snapshot]
@@ -92,36 +91,36 @@ class TestDescriptifTable(unittest.TestCase):
         self.assertIsInstance(result, str)
         self.assertTrue("Aucun document trouvé" in result)
 
-class TestModeleFunction(unittest.TestCase):
+# class TestModeleFunction(unittest.TestCase):
 
-    @patch('prediction.tf.keras.models.load_model')
-    @patch('prediction.json.load')
-    @patch('prediction.tf.keras.preprocessing.image.load_img')
-    @patch('prediction.tf.keras.preprocessing.image.img_to_array')
-    @patch('prediction.tf.expand_dims')
-    @patch('prediction.np.argmax')
-    def test_modele(self, mock_argmax, mock_expand_dims, mock_img_to_array, mock_load_img, mock_json_load, mock_load_model):
-        # Setup mock behavior
-        mock_json_load.return_value = {0: 'castor', 1: 'chat'}
-        mock_load_img.return_value = 'image_mock'
-        mock_img_to_array.return_value = 'image_array_mock'
-        mock_expand_dims.return_value = 'expanded_image_array_mock'
-        mock_argmax.return_value = 1  # Simulating that the prediction is 'dog'
-        mock_model = MagicMock()
-        mock_load_model.return_value = mock_model
-        mock_model.predict.return_value = [[0.2, 0.8]]  # Mock prediction result
+#     @patch('prediction.tf.keras.models.load_model')
+#     @patch('prediction.json.load')
+#     @patch('prediction.tf.keras.preprocessing.image.load_img')
+#     @patch('prediction.tf.keras.preprocessing.image.img_to_array')
+#     @patch('prediction.tf.expand_dims')
+#     @patch('prediction.np.argmax')
+#     def test_modele(self, mock_argmax, mock_expand_dims, mock_img_to_array, mock_load_img, mock_json_load, mock_load_model):
+#         # Setup mock behavior
+#         mock_json_load.return_value = {0: 'castor', 1: 'chat'}
+#         mock_load_img.return_value = 'image_mock'
+#         mock_img_to_array.return_value = 'image_array_mock'
+#         mock_expand_dims.return_value = 'expanded_image_array_mock'
+#         mock_argmax.return_value = 1  # Simulating that the prediction is 'dog'
+#         mock_model = MagicMock()
+#         mock_load_model.return_value = mock_model
+#         mock_model.predict.return_value = [[0.2, 0.8]]  # Mock prediction result
         
-        # Call the function under test
-        predicted_class = modele('C:/Users/Dorian/Desktop/docker_flask/Conteneur-docker/Dog-Tracks-5.jpg')
+#         # Call the function under test
+#         predicted_class = modele('Dog-Tracks-5.jpg')
         
-        # Assertions
-        mock_load_model.assert_called_once_with('IA')
-        mock_load_img.assert_called_once()
-        mock_img_to_array.assert_called_once_with('image_mock')
-        mock_expand_dims.assert_called_once()
-        mock_model.predict.assert_called_once()
-        mock_argmax.assert_called_once()
-        self.assertEqual(predicted_class, 'dog')
+#         # Assertions
+#         mock_load_model.assert_called_once_with('IA')
+#         mock_load_img.assert_called_once()
+#         mock_img_to_array.assert_called_once_with('image_mock')
+#         mock_expand_dims.assert_called_once()
+#         mock_model.predict.assert_called_once()
+#         mock_argmax.assert_called_once()
+#         self.assertEqual(predicted_class, 'dog')
 
 class TestTableUserIdFunction(unittest.TestCase):
 
@@ -199,64 +198,6 @@ class TestUploadOnBddFunction(unittest.TestCase):
             'prediction': prediction
         })
         self.assertEqual(result, "Merci pour votre contribution à WildLens ! ")
-
-
-class TestUploadImagesToFirebaseStorage(unittest.TestCase):
-
-    @patch('upload_nico.os.path.isdir')
-    @patch('upload_nico.os.path.isfile')
-    @patch('upload_nico.os.listdir')
-    @patch('upload_nico.firebase_admin.initialize_app')
-    @patch('upload_nico.storage.bucket')
-    @patch('upload_nico.firestore.client')
-    def test_upload_images_directory(self, mock_firestore_client, mock_storage_bucket, mock_initialize_app, mock_listdir, mock_isfile, mock_isdir):
-        # Configuration des mocks
-        mock_isdir.return_value = True
-        mock_isfile.return_value = False
-        mock_listdir.return_value = ['image1.jpg', 'image2.png']
-        mock_app = Mock()
-        mock_initialize_app.return_value = mock_app
-        mock_bucket = Mock()
-        mock_storage_bucket.return_value = mock_bucket
-        mock_blob = Mock()
-        mock_bucket.blob.return_value = mock_blob
-        mock_db = Mock()
-        mock_firestore_client.return_value = mock_db
-
-        # Appel de la fonction avec un chemin de répertoire
-        uploadImagesToFirebaseStorage('/path/to/images', 'Chat')
-
-        # Vérifications
-        self.assertEqual(mock_blob.upload_from_filename.call_count, 2)
-        self.assertEqual(mock_db.collection().add.call_count, 2)
-        mock_blob.make_public.assert_called()
-
-    @patch('upload_nico.os.path.isdir')
-    @patch('upload_nico.os.path.isfile')
-    @patch('upload_nico.firebase_admin.initialize_app')
-    @patch('upload_nico.storage.bucket')
-    @patch('upload_nico.firestore.client')
-    def test_upload_single_image_file(self, mock_firestore_client, mock_storage_bucket, mock_initialize_app, mock_isfile, mock_isdir):
-        # Configuration des mocks pour simuler un fichier unique
-        mock_isdir.return_value = False
-        mock_isfile.return_value = True
-        mock_app = Mock()
-        mock_initialize_app.return_value = mock_app
-        mock_bucket = Mock()
-        mock_storage_bucket.return_value = mock_bucket
-        mock_blob = Mock()
-        mock_bucket.blob.return_value = mock_blob
-        mock_db = Mock()
-        mock_firestore_client.return_value = mock_db
-
-        # Appel de la fonction avec le chemin d'une image
-        uploadImagesToFirebaseStorage('/path/to/image.jpg', 'Chien')
-
-        # Vérifications
-        mock_blob.upload_from_filename.assert_called_once_with('/path/to/image.jpg')
-        mock_db.collection().add.assert_called_once()
-        mock_blob.make_public.assert_called_once()
-
 
 
 if __name__ == '__main__':

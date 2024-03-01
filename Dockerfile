@@ -18,7 +18,10 @@ COPY upload_BDD.py upload_BDD.py
 COPY footprints.json footprints.json
 COPY descriptif.py descriptif.py
 COPY table_user.py table_user.py
-
+COPY lint.py lint.py
+COPY TU.py TU.py
+COPY TI.py TI.py
+COPY Dog-Tracks-5.jpg Dog-Tracks-5.jpg
 
 
 # Définit la commande par défaut pour exécuter l'application
