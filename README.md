@@ -28,13 +28,11 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 
 - `upload_BDD.py`: Ce script permet d'enregistrer les images envoyées par l'utilisateur ainsi que la prédiction qui a été faite et l'UID de l'utilisateur qui permettra par la suite de requpeter la base de données Firebase pour récupérer un historique utilisateur. 
 
-- `upload_nico.py`: En lien direct avec **index.html**, ce script permet d'uploader les images sélectionnées, de les insérer et de générer des urls dans la base de données Firebase demanière quasi-automatisée.
-
 ## Instructions
 1. S'assurer que Docker est bien installé sur votre ordinateur (*[installer docker](https://www.docker.com/products/docker-desktop/)).
 2. Via un invité de commande ou l'IDE de votre choix, lancer la commande ```docker build -t <nom_de_l'image_souhaitée> .```
 3. Toujours via votre invité de commade ou via l'IDE de votre choix, exécuter la commande ```docker run --restart always -d -p 5000:5000 <nom_de_l'image_souhaitée>```
-4. Accéder à l'url suivant pour vérifier que tout s'est bien exécuté : *[http://localhost:5000/bddnico](http://localhost:5000/bddnico). Si vous arrivez sur une feêtre comme ceci c'est que cela a bien fonctionné : ![image](https://github.com/DorianFIGUERAS/MSPR_BACK/assets/127091847/ff00557a-6ab2-4883-85ef-49f2912c9fde)
+4. Accéder à l'url suivant pour vérifier que tout s'est bien exécuté : *[http://localhost:5000/upload_photo](http://localhost:5000/bddnico). Si vous arrivez sur une feêtre comme ceci c'est que cela a bien fonctionné : ![image](https://github.com/DorianFIGUERAS/MSPR_BACK/assets/127091847/ff00557a-6ab2-4883-85ef-49f2912c9fde)
 
 
 ## Description détaillée des scripts
