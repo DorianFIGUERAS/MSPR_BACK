@@ -31,7 +31,7 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 ## Instructions
 1. S'assurer que Docker est bien installé sur votre ordinateur (*[installer docker](https://www.docker.com/products/docker-desktop/)).
 2. Via un invité de commande ou l'IDE de votre choix, lancer la commande ```docker build -t <nom_de_l'image_souhaitée> .```
-3. Toujours via votre invité de commade ou via l'IDE de votre choix, exécuter la commande ```docker run --restart always -d -p 5000:5000 <nom_de_l'image_souhaitée>```
+3. Toujours via votre invité de commade ou via l'IDE de votre choix, exécuter la commande ```docker run --restart always -d -p 5000:5000 dorianfigueras1207725/testapp```
 4. Accéder à l'url suivant pour vérifier que tout s'est bien exécuté : *[http://localhost:5000/upload_photo](http://localhost:5000/bddnico). Si vous arrivez sur une feêtre comme ceci c'est que cela a bien fonctionné : <img width="936" alt="image" src="https://github.com/DorianFIGUERAS/MSPR_BACK/assets/127091847/f311f762-706d-4b2d-be95-5a9bef0e80a9">
 
 
