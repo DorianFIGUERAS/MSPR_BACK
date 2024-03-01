@@ -32,7 +32,8 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 1. S'assurer que Docker est bien installé sur votre ordinateur (*[installer docker](https://www.docker.com/products/docker-desktop/)).
 2. Via un invité de commande ou l'IDE de votre choix, lancer la commande ```docker build -t <nom_de_l'image_souhaitée> .```
 3. Toujours via votre invité de commade ou via l'IDE de votre choix, exécuter la commande ```docker run --restart always -d -p 5000:5000 <nom_de_l'image_souhaitée>```
-4. Accéder à l'url suivant pour vérifier que tout s'est bien exécuté : *[http://localhost:5000/upload_photo](http://localhost:5000/bddnico). Si vous arrivez sur une feêtre comme ceci c'est que cela a bien fonctionné : ![image](https://github.com/DorianFIGUERAS/MSPR_BACK/assets/127091847/ff00557a-6ab2-4883-85ef-49f2912c9fde)
+4. Accéder à l'url suivant pour vérifier que tout s'est bien exécuté : *[http://localhost:5000/upload_photo](http://localhost:5000/bddnico). Si vous arrivez sur une feêtre comme ceci c'est que cela a bien fonctionné : <img width="936" alt="image" src="https://github.com/DorianFIGUERAS/MSPR_BACK/assets/127091847/f311f762-706d-4b2d-be95-5a9bef0e80a9">
+
 
 
 ## Description détaillée des scripts
@@ -49,14 +50,6 @@ Le projet requière plusieurs packages python qui seront installés via **requir
 
   `/history` : Endpoint pour récupérer l'historique des images téléchargées par un utilisateur. Grâce à la route '/userid' nous avons déjà récupérer l'UID de l'utilisateur lorsque il a démarrer l'application. Nous venons donc ici requpeter la base de données afin de récupérer l'historique de l'utilisateur (prédiction + photo envoyée) grâce à une clause where. Les données sont envoyées à l'application sous format JSON et affichées à l'utilisateur.
 
-  `/bddnico` : Endpoint pour uploader les images sélectionnées dans la base de données afin d'alimenter plus tard pour l'ETL et l'entraînement de l'IA (page de téléversement d'images). Lors de l'envoie des images via le script **index.html**, cela va pointer vers l'endpoint '/upload' afin d'éxécuter l'insertion des images dans la base de données. 
-
-  `/upload` : Endpoint pour uploader plusieurs photos dans la BDD. On les enregistre d'abord localement, puis on les uploade vers Firebase Storage avant de les supprimer du conteneur pour optimiser l'espace de stockage du serveur. 
-
-  `/pysparkus` : Endpoint pour rendre une page HTML. Cette page permet ensuite de rediriger vers l'endpoint '/pyspark' afin de lancer le processus ETL.
-
-  `/pyspark` : Endpoint pour déclencher un processus PySpark via le script **pysparknico.py**.
-
 - **descriptif.py** :
 
     Importation des bibliothèques et définition des champs de la table "descriptif" dans la fonction **format_descriptif_data**. 
@@ -65,10 +58,6 @@ Le projet requière plusieurs packages python qui seront installés via **requir
     initialise la base de données, puis on requête la base de données grâce à l'ID de l'animal récupéré et aux champs de la table "descriptif" définit plus tôt.
     Toutes les informations sont retournées dans une variable dans le script **app.py**.
 
-- **index.html**, **index1.html** :
-
-    * Pour **index.html** : Création d'un formulaire et d'un liste déroulante pour permettre la sélection de l'animal afin d'uploader les images dans le bon dossier de la BDD. On  donne la possibilité à l'utilisateur de sélectionner un ou plusieurs fichiers via la balise **<input>** et d'envoyer toutes ces informations au script **app.py**.
-    * Pour **index.html** : Permet de lancer le script pour la phase d'ETL ainsi que la possibilité de lancer l'entraînement de l'IA via les bouttons présents dans la page. 
 
 - **prediction.py** :
  
@@ -94,12 +83,6 @@ Le projet requière plusieurs packages python qui seront installés via **requir
     Importation des bibliothèques et initialisation de la BDD si ce n'est pas déjà fait.
 
     Pour uploader l'image de l'utilisateur, nous récupérons ici le path de l'image initialement stockée dans le conteneur docker ainsi que l'UID de l'utilisateur. Nous envoyons ensuite l'image dans la BDD en spécifant que l'on souhaite créer une url publique associée à cette image afin de pouvoir la réutiliser plus tard (pour l'historique utilisateur par exemple). Une fois l'image uploadée ainsi que les informations créées, nous venons insérer tout cela dans la database de Firebase en spécifiant les champs ainsi que leur contenu.
-
-- **upload_nico.py** :
-  
-    Importation des différentes bibliothèques et initialisation de la base de données.
-
-    Nous créons ici un dictionnaire afin d'attribuer un ID à chaque animal pour créer une key. Nous vérifions ensuite si ce que l'on souhaite uploader est une image (ou un fichier) ou si c'est un dossier car le traitement serait différent en fonction du type. Nous insérons ensuite les images dans la BDD à l'endroit spécifier (ici : **Images/{animal_name}/{image_name}**). Les informations **animal_name** ainsi qu'**image_name** sont récupérées en paramètre de la fonction **uploadImagesToFirebaseStorage**. Une fois les images insérées, nous générons des urls publiques afin de pouvoir les réutiliser plus tard puis nous créons la table dans la database dans laquelle nous y mettons toutes les informations nécéssaires et potentiellement utiles.
 
   
     
