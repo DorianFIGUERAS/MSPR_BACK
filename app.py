@@ -1,6 +1,7 @@
-from flask import Flask, jsonify, request, render_template, flash, redirect, url_for
+from flask import Flask, jsonify, request, render_template, flash, redirect, url_for,session
 import os
 import json
+import uuid
 from werkzeug.utils import secure_filename
 import tensorflow as tf
 from prediction import modele
@@ -33,7 +34,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/userid', methods=['POST'])
 def receive_uid():
-    global UID_user
+    UID_user
 
     #Vérifier que la requête contient un JSON
     if request.is_json:
@@ -41,16 +42,21 @@ def receive_uid():
         #Obtenir les données JSON envoyées avec la requête
         data = request.get_json()
 
-        #Extraire l'UID utilisateur du json reçu
-        UID_user = data.get('uid', '')
+        #Extraire l'UID utilisateur du json reçu et le stocker dans la session
+        session['UID_user'] = data.get('uid', '')
 
         #Afficher l'UID utilisateur
-        print(f"UID utilisateur reçu : {UID_user}")
+        print(f"UID utilisateur reçu : {session['UID_user']}")
 
         return jsonify({"message ": "UID reçu avec succès", "uid ": UID_user}), 200
     else :
         return jsonify({"error ": "Requête non JSON ou vide"}), 400
-    
+
+def unique_file_name(filename):
+    base, extension = os.path.splitext(filename)
+    unique_name = f"{base}-{uuid.uuid4()}{extension}"
+    return unique_name
+ 
 @app.route('/upload_photo', methods=['POST'])
 def upload_photo():
     if 'photo' not in request.files:
@@ -61,7 +67,7 @@ def upload_photo():
 
     if photo:
         filename = secure_filename(photo.filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_file_name(filename)) #On s'assure ici que le nom de la photo est unique
         photo.save(file_path)
         prediction, pourcentage = modele(file_path)
         upload_image = upload_on_bdd(file_path, UID_user, prediction)

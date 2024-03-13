@@ -2,6 +2,7 @@ flask
 werkzeug
 numpy
 Pillow
-tensorflow
+tensorflow==2.15.0
 firebase-admin
 flake8
+gunicorn

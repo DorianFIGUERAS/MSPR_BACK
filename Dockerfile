@@ -25,4 +25,4 @@ COPY Dog-Tracks-5.jpg Dog-Tracks-5.jpg
 
 
 # Définit la commande par défaut pour exécuter l'application
-CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0"]
+CMD ["gunicorn", "--workers=10", "--bind", "0.0.0.0:5000", "app:app"]
