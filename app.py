@@ -1,82 +1,60 @@
-from flask import Flask, jsonify, request, render_template, flash, redirect, url_for,session
+from flask import Flask, jsonify, request, session
 from flask_cors import CORS
 import os
 import json
 import uuid
 from werkzeug.utils import secure_filename
-import tensorflow as tf
 from prediction import modele
 from upload_BDD import upload_on_bdd
 from descriptif import descriptif_table
-from firebase_admin import credentials, storage, firestore
-from table_user import table_user_id
 import firebase_admin
-import shutil
+from firebase_admin import credentials, firestore, initialize_app
 
+# Initialisation de Firebase
 cred = credentials.Certificate('footprints.json')
-firebase_admin.initialize_app(cred,{
-    'storageBucket': 'footprints-8e343.appspot.com',
-    })
-
+initialize_app(cred, {'storageBucket': 'footprints-8e343.appspot.com'})
 db = firestore.client()
-
 
 app = Flask(__name__)
 CORS(app)
 
-app.secret_key = "wildlens2024"
-UID_user = ""
-prediction = ""
+app.secret_key = "secret_key_here"
 
 UPLOAD_FOLDER = 'images'
 if not os.path.exists(UPLOAD_FOLDER):
     os.makedirs(UPLOAD_FOLDER)
-
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
-
-@app.route('/userid', methods=['POST'])
-def receive_uid():
-    UID_user
-
-    #Vérifier que la requête contient un JSON
-    if request.is_json:
-
-        #Obtenir les données JSON envoyées avec la requête
-        data = request.get_json()
-
-        #Extraire l'UID utilisateur du json reçu et le stocker dans la session
-        session['UID_user'] = data.get('uid', '')
-
-        #Afficher l'UID utilisateur
-        print(f"UID utilisateur reçu : {session['UID_user']}")
-
-        return jsonify({"message ": "UID reçu avec succès", "uid ": UID_user}), 200
-    else :
-        return jsonify({"error ": "Requête non JSON ou vide"}), 400
 
 def unique_file_name(filename):
     base, extension = os.path.splitext(filename)
     unique_name = f"{base}-{uuid.uuid4()}{extension}"
     return unique_name
- 
-@app.route('/upload_photo', methods=['POST'])
+
+@app.route('/upload', methods=['POST'])
 def upload_photo():
-    if 'photo' not in request.files:
-        return jsonify({'error': 'Aucun fichier trouvé'}), 400
+    # Vérifier si l'UID et la photo sont présents dans la requête
+    if 'photo' not in request.files or 'uid' not in request.form:
+        return jsonify({'error': 'UID ou fichier photo manquant'}), 400
+
+    uid = request.form['uid']
     photo = request.files['photo']
+
     if photo.filename == '':
         return jsonify({'error': 'Nom de fichier vide'}), 400
 
-    if photo:
-        filename = secure_filename(photo.filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_file_name(filename)) #On s'assure ici que le nom de la photo est unique
-        photo.save(file_path)
-        prediction, pourcentage = modele(file_path)
-        upload_image = upload_on_bdd(file_path, UID_user, prediction)
-        valeurs, image_url = descriptif_table(prediction)
-        os.remove(file_path)
-        return jsonify({"Informations ": valeurs , "pourcentage ": pourcentage, "url ": image_url}), 200
-    return jsonify({'error': 'Erreur lors du téléchargement'}), 500
+    filename = secure_filename(photo.filename)
+    file_path = os.path.join(app.config['UPLOAD_FOLDER'], unique_file_name(filename))
+    photo.save(file_path)
+
+    # Traitement de la photo (exemple fictif)
+    prediction, pourcentage = modele(file_path)
+    upload_image = upload_on_bdd(file_path, uid, prediction)
+    valeurs, image_url = descriptif_table(prediction)
+
+    os.remove(file_path)
+
+    return jsonify({"Informations": valeurs, "pourcentage": pourcentage, "url": image_url}), 200
+
 
 @app.route('/history', methods=['POST'])
 def get_table_user():
