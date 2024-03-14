@@ -1,4 +1,5 @@
 from flask import Flask, jsonify, request, render_template, flash, redirect, url_for,session
+from flask_cors import CORS
 import os
 import json
 import uuid
@@ -21,6 +22,7 @@ db = firestore.client()
 
 
 app = Flask(__name__)
+CORS(app)
 
 app.secret_key = "wildlens2024"
 UID_user = ""
