@@ -24,5 +24,13 @@ COPY TI.py TI.py
 COPY Dog-Tracks-5.jpg Dog-Tracks-5.jpg
 
 
-# Définit la commande par défaut pour exécuter l'application
-CMD ["gunicorn", "--workers=10", "--bind", "0.0.0.0:5000", "app:app"]
+# Création du répertoire pour les certificats
+RUN mkdir -p /certs
+
+# Ajoutez les fichiers de certificat à l'image Docker
+COPY fullchain.pem /certs/fulchain.pem
+COPY privkey.pem /certs/privkey.pem
+
+EXPOSE 8000
+
+CMD ["gunicorn", "-w", "2","--certfile", "/certs/fulchain.pem", "--keyfile", "/certs/privkey.pem", "-b", "0.0.0.0:8000", "app:app"]
